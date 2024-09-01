@@ -18,12 +18,12 @@ const Trailer = () => {
         className="absolute hover:text-[#6556CD] ri-close-fill text-3xl text-white right-[5%] top-[5%]"
       ></Link>
       {ytvideo ? (
-        <div className="flex items-center justify-center">
-          <div className="rounded-lg overflow-hidden"> {/* Border radius applied here */}
+        <div className="flex items-center justify-center w-full h-full">
+          <div className="rounded-lg overflow-auto w-[90vw] h-[40vh] md:w-[800px] md:h-[450px]"> {/* Border radius applied here */}
             <ReactPlayer
               controls
-              height={450} // Adjust the height
-              width={800} // Adjust the width
+              width="100%"
+              height="100%"
               url={`https://www.youtube.com/watch?v=${ytvideo.key}`}
             />
           </div>
