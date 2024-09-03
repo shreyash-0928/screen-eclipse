@@ -9,16 +9,16 @@ import Loading from "./Loading";
 
 const Home = () => {
   document.title = "ScreenEclipse | Homepage";
-  const [wallpaper, setwallpaper] = useState(null);
-  const [trending, settrending] = useState(null);
-  const [category, setcategory] = useState("all");
+  const [wallpaper, setWallpaper] = useState(null);
+  const [trending, setTrending] = useState(null);
+  const [category, setCategory] = useState("all");
 
   const GetHeaderWallpaper = async () => {
     try {
       const { data } = await axios.get(`/trending/all/day`);
-      let randomdata =
-        data.results[(Math.random() * data.results.length).toFixed()];
-      setwallpaper(randomdata);
+      let randomData =
+        data.results[Math.floor(Math.random() * data.results.length)];
+      setWallpaper(randomData);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -27,7 +27,7 @@ const Home = () => {
   const GetTrending = async () => {
     try {
       const { data } = await axios.get(`/trending/${category}/day`);
-      settrending(data.results);
+      setTrending(data.results);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -35,27 +35,28 @@ const Home = () => {
 
   useEffect(() => {
     GetTrending();
-    !wallpaper && GetHeaderWallpaper();
+    if (!wallpaper) GetHeaderWallpaper();
   }, [category]);
 
   return wallpaper && trending ? (
-    <>
+    <div className="flex overflow-hidden">
       <Sidenav />
-      <div className="w-[80%] h-full overflow-auto overflow-x-hidden">
+      <div className="flex-1 ml-0 lg:ml-[20%] transition-all duration-300 overflow-auto overflow-x-hidden">
         <Topnav />
         <Header data={wallpaper} />
-        <div className="flex justify-between p-5">
-          <h1 className="text-3xl font-semibold text-zinc-400">Trending</h1>
-
+        <div className="p-5 flex flex-col md:flex-row items-start justify-between">
+          <h1 className="text-3xl font-semibold text-zinc-400 mb-4 md:mb-0">
+            Trending
+          </h1>
           <Dropdown
             title="Filter"
             options={["tv", "movie", "all"]}
-            func={(e) => setcategory(e.target.value)}
+            func={(e) => setCategory(e.target.value)}
           />
         </div>
         <HorizontalCards data={trending} />
       </div>
-    </>
+    </div>
   ) : (
     <Loading />
   );
