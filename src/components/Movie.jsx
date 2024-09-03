@@ -45,12 +45,12 @@ const Movie = () => {
   }, [category]);
 
   return movie.length > 0 ? (
-    <div className="w-screen h-screen ">
+    <div className="w-screen h-screen">
       <div className=" px-[5%] w-full flex items-center justify-between ">
         <h1 className=" text-2xl font-semibold text-zinc-400">
           <i
             onClick={() => navigate(-1)}
-            className="hover:text-[#6556CD] ri-arrow-left-line"
+            className="hover:text-[#d42525] ri-arrow-left-line mr-3"
           ></i>{" "}
           Movie
           <small className="ml-2 text-sm text-zinc-600">({category})</small>
@@ -70,7 +70,11 @@ const Movie = () => {
         dataLength={movie.length}
         next={GetMovie}
         hasMore={hasMore}
-        loader={<h1>Loading...</h1>}
+        loader={
+          <div className="flex justify-center items-center h-24 bg-[#1F1E24]">
+            <h1 className="text-white">Loading...</h1>
+          </div>
+        }
       >
         <Cards data={movie} title="movie" />
       </InfiniteScroll>
